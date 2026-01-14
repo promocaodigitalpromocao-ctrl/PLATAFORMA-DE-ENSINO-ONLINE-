@@ -1,0 +1,22 @@
+
+{
+  "short_name": "Ensino Online",
+  "name": "Plataforma de Ensino Online",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=192&auto=format&fit=crop",
+      "type": "image/jpeg",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=512&auto=format&fit=crop",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#09090b",
+  "background_color": "#09090b",
+  "orientation": "portrait"
+}
