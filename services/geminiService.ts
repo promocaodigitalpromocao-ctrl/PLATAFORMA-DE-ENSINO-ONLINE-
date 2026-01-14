@@ -1,8 +1,8 @@
+
 import { Question } from '../types';
 
 const getApiKey = () => {
   try {
-    // Safety check: process might not be defined in browser environments
     if (typeof process !== 'undefined' && process.env) {
       return process.env.API_KEY;
     }
@@ -21,8 +21,6 @@ export const generateQuestionsFromContent = async (contentContext: string): Prom
   }
 
   try {
-    // Dynamic import to prevent crash on initial load if library fails
-    // This fixes the "White Screen" issue if @google/genai is not reachable immediately
     // @ts-ignore
     const { GoogleGenAI, Type } = await import("@google/genai");
     
@@ -63,12 +61,11 @@ export const generateQuestionsFromContent = async (contentContext: string): Prom
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
         responseSchema: schema,
-        maxOutputTokens: 8192 
       }
     });
 
