@@ -1,22 +1,26 @@
 
 {
-  "short_name": "Ensino Online",
+  "short_name": "Minha Escola",
   "name": "Plataforma de Ensino Online",
+  "description": "Assista suas aulas e conquiste seu certificado em qualquer lugar.",
   "icons": [
     {
-      "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=192&auto=format&fit=crop",
-      "type": "image/jpeg",
-      "sizes": "192x192"
+      "src": "data:image/svg+xml,<svg width='192' height='192' viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='512' height='512' rx='120' fill='%234F46E5'/><path d='M256 120L100 200L256 280L412 200L256 120Z' fill='white'/><path d='M200 240V380L340 320L256 230' fill='white'/></svg>",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=512&auto=format&fit=crop",
-      "type": "image/jpeg",
-      "sizes": "512x512"
+      "src": "data:image/svg+xml,<svg width='512' height='512' viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='512' height='512' rx='120' fill='%234F46E5'/><path d='M256 120L100 200L256 280L412 200L256 120Z' fill='white'/><path d='M200 240V380L340 320L256 230' fill='white'/></svg>",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#09090b",
+  "theme_color": "#4f46e5",
   "background_color": "#09090b",
-  "orientation": "portrait"
+  "orientation": "portrait-primary",
+  "display_override": ["window-controls-overlay", "standalone"]
 }

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { CourseRating, User } from '../types';
+import { CourseRating as CourseRatingData, User } from '../types';
 import { db } from '../services/database';
 import { Star, Lock, MessageSquareQuote, Send, UserCircle2 } from 'lucide-react';
 
@@ -10,7 +10,7 @@ interface CourseRatingProps {
 }
 
 const CourseRating: React.FC<CourseRatingProps> = ({ isUnlocked, currentUser }) => {
-  const [ratings, setRatings] = useState<CourseRating[]>([]);
+  const [ratings, setRatings] = useState<CourseRatingData[]>([]);
   const [userRating, setUserRating] = useState(0);
   const [comment, setComment] = useState('');
   const [hasRated, setHasRated] = useState(false);

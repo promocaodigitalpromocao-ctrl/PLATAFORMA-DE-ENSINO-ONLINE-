@@ -1,8 +1,10 @@
 
 import { Question } from '../types';
+import { GoogleGenAI, Type } from "@google/genai";
 
 const getApiKey = () => {
   try {
+    // No Vite, o process.env.API_KEY é injetado via define no vite.config.ts
     if (typeof process !== 'undefined' && process.env) {
       return process.env.API_KEY;
     }
@@ -21,9 +23,6 @@ export const generateQuestionsFromContent = async (contentContext: string): Prom
   }
 
   try {
-    // @ts-ignore
-    const { GoogleGenAI, Type } = await import("@google/genai");
-    
     const ai = new GoogleGenAI({ apiKey: apiKey });
     
     const schema = {
