@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Module, Lesson, LessonSidebarProps } from '../types';
-import { PlayCircle, Lock, CheckCircle, Clock, ChevronsLeft, Pencil, ExternalLink, Globe, Check, Smartphone, X, Copy } from 'lucide-react'; 
+import { PlayCircle, Lock, CheckCircle, Clock, ChevronsLeft, Pencil, ExternalLink, Globe } from 'lucide-react'; 
 import { Logo } from './Logo';
 import { db } from '../services/database';
 
@@ -10,7 +10,6 @@ const LessonSidebar: React.FC<LessonSidebarProps> = ({
   currentLessonId, 
   completedLessons, 
   onSelectLesson,
-  isSidebarOpen,
   isDesktopOpen = true,
   onToggleDesktop,
   isAdmin = false,
@@ -18,7 +17,6 @@ const LessonSidebar: React.FC<LessonSidebarProps> = ({
 }) => {
   const [customLink, setCustomLink] = useState(db.getSidebarLink());
   const [schoolName, setSchoolName] = useState(db.getSchoolName());
-  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
       const refresh = () => {
@@ -33,38 +31,30 @@ const LessonSidebar: React.FC<LessonSidebarProps> = ({
       };
   }, []);
 
-  // Lógica de Trava Sequencial
   const isLessonLocked = (lessonId: string): boolean => {
     if (isAdmin) return false;
-    
-    // Flatten all lessons across all modules to find the global sequence
     let allLessons: Lesson[] = [];
     modules.forEach(m => {
         if (m.isVisible !== false) allLessons = [...allLessons, ...m.lessons];
     });
-
     const index = allLessons.findIndex(l => l.id === lessonId);
-    if (index <= 0) return false; // Primeira aula nunca está travada
-
+    if (index <= 0) return false;
     const previousLesson = allLessons[index - 1];
     return !completedLessons.has(previousLesson.id);
   };
 
   return (
     <div className={`
-      fixed inset-y-0 left-0 z-30 transform transition-all duration-300 ease-in-out
+      relative h-full flex flex-col shrink-0 transition-all duration-300 ease-in-out
       bg-zinc-50 border-r border-zinc-200 
       dark:bg-zinc-950 dark:border-zinc-800
-      ${isSidebarOpen ? 'translate-x-0 w-80 shadow-2xl' : '-translate-x-full w-80'}
-      lg:relative lg:translate-x-0
-      ${isDesktopOpen ? 'lg:w-80' : 'lg:w-0 lg:overflow-hidden lg:border-r-0'}
-      flex flex-col
+      ${isDesktopOpen ? 'w-80' : 'w-0 overflow-hidden border-r-0'}
     `}>
       {/* HEADER */}
       <div className="p-6 border-b border-zinc-200 dark:border-zinc-900 flex items-center justify-between w-full shrink-0">
         <Logo size={42} editable={isAdmin} />
         {onToggleDesktop && (
-          <button onClick={onToggleDesktop} className="hidden lg:block p-2 text-zinc-400 hover:text-indigo-500 rounded-xl bg-zinc-100 dark:bg-zinc-900">
+          <button onClick={onToggleDesktop} className="p-2 text-zinc-400 hover:text-indigo-500 rounded-xl bg-zinc-100 dark:bg-zinc-900">
             <ChevronsLeft size={20} />
           </button>
         )}
@@ -104,7 +94,6 @@ const LessonSidebar: React.FC<LessonSidebarProps> = ({
                         }
                       `}
                     >
-                      {/* Thumbnail/Icon */}
                       <div className={`relative shrink-0 w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center border ${isSelected ? 'border-indigo-400' : 'border-zinc-200 dark:border-zinc-800'}`}>
                          {isCustomThumbnail ? (
                              <img src={lesson.thumbnail} alt="" className="w-full h-full object-cover" />
@@ -113,13 +102,11 @@ const LessonSidebar: React.FC<LessonSidebarProps> = ({
                                  <PlayCircle size={20} className={isSelected ? 'text-white' : 'text-zinc-400'} />
                              </div>
                          )}
-                         
                          {isCompleted && (
                              <div className="absolute inset-0 bg-emerald-500/40 backdrop-blur-[1px] flex items-center justify-center">
                                  <CheckCircle size={20} className="text-white drop-shadow-md" />
                              </div>
                          )}
-                         
                          {isLocked && (
                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                                  <Lock size={18} className="text-white/80" />

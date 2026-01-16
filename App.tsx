@@ -11,7 +11,7 @@ import CourseRating from './components/CourseRating';
 import CertificateModal from './components/CertificateModal'; 
 import AccessibilityWidget from './components/AccessibilityWidget'; 
 import { db } from './services/database';
-import { Menu, Loader2, LogOut, PlusCircle, Trophy, Award } from 'lucide-react';
+import { Loader2, LogOut, PlusCircle, Trophy, Award } from 'lucide-react';
 import { Logo } from './components/Logo';
 
 export const App: React.FC = () => {
@@ -30,7 +30,6 @@ export const App: React.FC = () => {
   const [viewState, setViewState] = useState<'VIDEO' | 'FINAL_EXAM' | 'COURSE_RESULT'>('VIDEO');
   
   const [showCertificateModal, setShowCertificateModal] = useState(false); 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
   const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true); 
   
   const [courseApproved, setCourseApproved] = useState(false);
@@ -84,7 +83,6 @@ export const App: React.FC = () => {
     if (user) setInitialVideoTime(db.getVideoProgress(user.id, lesson.id));
     setCurrentLesson(lesson);
     setViewState('VIDEO');
-    setIsSidebarOpen(false);
   };
 
   const handleVideoComplete = () => {
@@ -130,7 +128,7 @@ export const App: React.FC = () => {
         currentLessonId={currentLesson?.id || ''}
         completedLessons={completedLessons}
         onSelectLesson={handleLessonSelect}
-        isSidebarOpen={isSidebarOpen}
+        isSidebarOpen={true}
         isDesktopOpen={isDesktopSidebarOpen}
         onToggleDesktop={() => setIsDesktopSidebarOpen(!isDesktopSidebarOpen)}
         isAdmin={user.role === 'admin'}
@@ -141,12 +139,9 @@ export const App: React.FC = () => {
         <div className="max-w-5xl mx-auto p-4 md:p-10 pb-24">
           
           <div className="flex justify-between items-center mb-10">
-            <div className="flex items-center gap-4">
-               <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden p-2 bg-zinc-100 dark:bg-zinc-900 rounded-xl text-zinc-600"><Menu /></button>
-               <div>
-                  <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">{currentLesson?.title || "Selecione uma Aula"}</h1>
-                  <p className="text-sm text-zinc-500 font-medium">Progresso: {Math.round(progressPercentage)}% concluído</p>
-               </div>
+            <div>
+               <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">{currentLesson?.title || "Selecione uma Aula"}</h1>
+               <p className="text-sm text-zinc-500 font-medium">Progresso: {Math.round(progressPercentage)}% concluído</p>
             </div>
             
             <div className="flex items-center gap-3">
